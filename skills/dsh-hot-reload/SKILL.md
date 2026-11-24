@@ -54,7 +54,7 @@ printf '\n# hot-apply trigger %s\n' "$(date +%H:%M:%S)" >> cordis.patch.yml
 最常见的假阴性是探针写进了宿主根本不 import 的文件。先确认包入口：
 
 ```bash
-node -e "console.log(require('~/.dsh/profiles/<profile>/node_modules/<pkg>/package.json').exports)"
+node -e "console.log(require(process.env.HOME + '/.dsh/profiles/<profile>/node_modules/<pkg>/package.json').exports)"
 ```
 
 `exports['.']` 常指向 `runtime/<gen>/index.js`，仓库根的 `index.js` 可能只是冻结兼容文件。把探针加在真正入口，触发后读日志：
